@@ -27,12 +27,13 @@ input {
 	font: 11px Verdana, Arial, Sans-Serif;
 }
 h1 {
-	color:#00796C;
+	color:#00FF00;
 	font: 22px Verdana, Arial, Sans-Serif;
 	font-weight: bold;
 	margin-top: 0px;
 	padding-top: 15px;
 	text-decoration:none;
+	
 }
 h2 {
 	color: #333333;

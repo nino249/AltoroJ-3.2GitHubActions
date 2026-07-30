@@ -209,7 +209,7 @@ public class DBUtil {
 	 * @return true if valid user, false otherwise
 	 * @throws SQLException
 	 */
-	public static boolean isValidUser(String user, String password) throws SQLException{
+	public static synchronized boolean isValidUser(String user, String password) throws SQLException{
 		if (user == null || password == null || user.trim().length() == 0 || password.trim().length() == 0)
 			return false; 
 		
@@ -233,7 +233,7 @@ public class DBUtil {
 	 * @return user information
 	 * @throws SQLException
 	 */
-	public static User getUserInfo(String username) throws SQLException{
+	public static synchronized User getUserInfo(String username) throws SQLException{
 		if (username == null || username.trim().length() == 0)
 			return null; 
 		
@@ -267,7 +267,7 @@ public class DBUtil {
 	 * @return
 	 * @throws SQLException
 	 */
-	public static Account[] getAccounts(String username) throws SQLException{
+	public static synchronized Account[] getAccounts(String username) throws SQLException{
 		if (username == null || username.trim().length() == 0)
 			return null; 
 		

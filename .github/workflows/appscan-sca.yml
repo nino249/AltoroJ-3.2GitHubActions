@@ -1,0 +1,27 @@
+name: "HCL AppScan SCA"
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  sca-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run AppScan SCA scan
+        uses: HCL-TECH-SOFTWARE/appscan-sast-action@v1.0.8
+        with:
+          asoc_key: ${{ secrets.ASOC_KEY }}
+          asoc_secret: ${{ secrets.ASOC_SECRET }}
+          application_id: "10b03ad2-410f-47d5-80d9-168e016390f1"   # replace with your app ID
+          open_source_only: true          # run SCA only, skip SAST
+          wait_for_analysis: true         # wait for results instead of just kicking off the scan
+          analysis_timeout_minutes: 30
+          fail_for_noncompliance: true    # fail the build on findings above threshold
+          failure_threshold: "Medium"     # Low / Medium / High / Critical

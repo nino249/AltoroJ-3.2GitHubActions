@@ -76,7 +76,8 @@ jobs:
           asoc_key: ${{ secrets.ASOC_KEY }}
           asoc_secret: ${{ secrets.ASOC_SECRET }}
           # application_id: ${{ secrets.ASOC_APPLICATION_ID }}
-          application_id: "10b03ad2-410f-47d5-80d9-168e016390f1"
+          application_id: ${{ vars.ASOC_APPLICATION_ID }} 
+          # application_id: "10b03ad2-410f-47d5-80d9-168e016390f1"
           # SCA (Software Composition Analysis) only — skip SAST here since
           # the build job already exists separately; drop this line if you
           # want SAST + SCA together in one scan.

@@ -21,7 +21,7 @@ jobs:
           asoc_secret: ${{ secrets.ASOC_SECRET }}
           application_id: "10b03ad2-410f-47d5-80d9-168e016390f1"   # replace with your app ID
           open_source_only: true          # run SCA only, skip SAST
-          sca_scan_id: ${{ vars.ASOC_SCA_SCAN_ID }}      #Scan ID to be used for Rescan 
+          sca_scan_id: ${{ vars.ASOC_RESCAN_SCA_SCAN_ID }}      #Scan ID to be used for Rescan 
           wait_for_analysis: true         # wait for results instead of just kicking off the scan
           analysis_timeout_minutes: 30
           fail_for_noncompliance: true    # fail the build on findings above threshold

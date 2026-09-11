@@ -1,0 +1,49 @@
+name: Test AppScan Gradle integration (isolated repro)
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Small, known-good public Gradle project with one real third-party
+      # dependency (joda-time), using the same 'compile'-style build.gradle
+      # DSL as AltoroJ -- good isolated test case for the old-Gradle setup.
+      - name: Checkout spring-attic/gs-gradle
+        uses: actions/checkout@v4
+        with:
+          repository: spring-attic/gs-gradle
+          path: gs-gradle
+
+      # Same JDK/Gradle pin as the AltoroJ pipeline, so this is an
+      # apples-to-apples test of whether the crash is inherent to
+      # "old Gradle + AppScan action" in general, or specific to AltoroJ.
+      - name: Set up JDK 8
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '8'
+
+      - name: Set up Gradle 6.9.4
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '6.9.4'
+
+      - name: Build the sample (complete/ has the joda-time dependency)
+        working-directory: gs-gradle/complete
+        run: gradle build --no-daemon --stacktrace
+
+      - name: Run AppScan SCA scan against the sample
+        uses: HCL-TECH-SOFTWARE/appscan-sast-action@v1.1.2
+        with:
+          asoc_key: ${{ secrets.ASOC_KEY }}
+          asoc_secret: ${{ secrets.ASOC_SECRET }}
+          application_id: ${{ secrets.ASOC_APPLICATION_ID }}
+          open_source_only: true
+          scan_build_outputs: true
+          scan_name: "gs-gradle repro test - ${{ github.sha }}"
+          wait_for_analysis: true
+          fail_for_noncompliance: false
+          github_token: ${{ github.token }}

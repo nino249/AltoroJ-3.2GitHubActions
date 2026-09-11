@@ -40,7 +40,8 @@ jobs:
         with:
           asoc_key: ${{ secrets.ASOC_KEY }}
           asoc_secret: ${{ secrets.ASOC_SECRET }}
-          application_id: ${{ secrets.ASOC_APPLICATION_ID }}
+          # application_id: ${{ secrets.ASOC_APPLICATION_ID }}
+          application_id: "fed3d4df-8f08-4b4a-9246-9368ccf756ce"
           open_source_only: true
           scan_build_outputs: true
           scan_name: "gs-gradle repro test - ${{ github.sha }}"

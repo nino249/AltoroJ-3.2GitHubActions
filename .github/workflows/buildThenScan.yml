@@ -44,6 +44,13 @@ jobs:
       - name: Build WAR
         run: gradle war --no-daemon --stacktrace
 
+      # Sanity check: confirm the WAR actually contains classes and jars
+      # before handing it to AppScan.
+      - name: Verify WAR contents
+        run: |
+          echo "Class files:"; unzip -l build/libs/altoromutual.war | grep -c '\.class$' || true
+          echo "Jar files:";   unzip -l build/libs/altoromutual.war | grep '\.jar$' || true
+ 
       # Runs the SCA scan straight against build/libs/altoromutual.war on
       # disk, in the same job that produced it. No upload-artifact /
       # download-artifact step is involved for the scan itself, so there's
